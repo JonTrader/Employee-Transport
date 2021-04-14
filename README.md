@@ -7,7 +7,8 @@ Project Description: Internal scheduling system for employees of a company that 
 
 
 **1- Liang Wu - In charge of the front-end login system using HTML, CSS, and Javascript.**
-*2 - David - Designed the UI for the app using Canva
+
+2 - David - Designed the UI for the app using Canva
 3 - Jonathan/Liang Wu - Mongoose, NodeJS, Javascript
 4 - Zak/Kevin - Coding up UI design from David
 5 - Miller - GitHub
