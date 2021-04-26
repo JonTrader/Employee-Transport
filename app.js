@@ -27,23 +27,6 @@ app.get("/", (req, res) =>
 })
 
 
-
-// const employeeSchema = new mongoose.Schema(
-//     {
-//         title: String,
-//         givenName: String,
-//         middleInitial: String,
-//         surname: String,
-//         employeeID:  Number,
-//         occupation: String,
-//         username: String,
-//         local: String,
-//         state: String
-//     }
-// )
-
-// const employee = mongoose.model("employee", employeeSchema);
-
 app.listen (3000, () =>
 {
     console.log("serving on port 3000");
