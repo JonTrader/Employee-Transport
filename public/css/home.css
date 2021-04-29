@@ -1,0 +1,44 @@
+*
+{
+    font-family: 'Cabin', sans-serif;
+}
+
+body
+{
+    background-color: rgb(120, 120, 120);
+}
+
+.card-img, .card-img-top
+{
+    border-radius: .5rem;
+}
+
+.home-card
+{
+    background-color: #27405f;
+    border-radius: 0.75rem;
+}
+
+a
+{
+    text-decoration: none;
+}
+
+a p:hover
+{
+    color: red;
+    transition: 500ms;
+}
+
+.text-card-home
+{
+    font-size: 1.25rem;
+    text-decoration: none;
+    color: white;
+}
+
+.car-service
+{
+    opacity: 0.2;
+}
+
