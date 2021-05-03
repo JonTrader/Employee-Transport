@@ -9,8 +9,8 @@ const RouteSchema = new Schema(
     to: String,
     departureTime: String,
     arrivalTime: String,
-    duration: Number
-
+    duration: Number,
+    numPassengers: Number
 })
 
 module.exports = mongoose.model("Route", RouteSchema);

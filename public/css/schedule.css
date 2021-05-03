@@ -1,0 +1,18 @@
+*
+{
+    font-family: 'Cabin', sans-serif;
+}
+
+body
+{
+    background-color: rgb(120, 120, 120);
+}
+
+.dropdowns
+{
+    border-radius: 0.5rem;
+    width: 8rem;
+    height: 2.5rem;
+    border: solid #212529 .2rem;
+    font-size: 1.125rem;
+}
