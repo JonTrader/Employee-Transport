@@ -7,3 +7,8 @@ body
 {
     background-color: rgb(120, 120, 120);
 }
+
+.navbar-dark .navbar-brand:focus, .navbar-dark .navbar-brand:hover
+{
+    color: red;
+}
