@@ -8,7 +8,17 @@ body
     background-color: rgb(120, 120, 120);
 }
 
-.navbar-dark .navbar-brand:focus, .navbar-dark .navbar-brand:hover
+.signout
 {
-    color: red;
+    background-color: inherit;
+    border-radius: .5rem;
+    border:2px rgb(120, 120, 120) solid; 
+}
+
+.signout:hover
+{
+    background-color: rgb(0, 0, 0);
+    border-radius: .5rem;
+    border:2px rgb(181, 184, 26) solid; 
+    transition: 750ms;
 }

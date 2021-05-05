@@ -13,6 +13,6 @@ s1.addEventListener("change", function()
 
 })
 
-const v1 = s1[s1.options.selectedIndex].getAttribute("value");
-const v2 = s2[s2.options.selectedIndex].getAttribute("value");
+let v1 = s1[s1.options.selectedIndex].getAttribute("value");
+let v2 = s2[s2.options.selectedIndex].getAttribute("value");
 // get values to be able to look for in the database

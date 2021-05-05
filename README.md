@@ -6,12 +6,12 @@ swe project
 Project Description: Internal scheduling system for employees of a company that has several offices near to each other within each location.
 
 
-1- Liang Wu - In charge of the front-end login system using HTML, CSS, and Javascript
-2 - David - Designed the UI for the app using Canva
-3 - Jonathan - Mongoose, NodeJS, Javascript
-4 - Zak/Kevin - Coding up UI design from David
-5 - Miller - GitHub
-6 - Malik and Mohamed - Documentation
+1 - Liang, Jonathan - front-end development using HTML, CSS, and Javascript \n
+2 - David - designed the UI for the app using Canva \n
+3 - Jonathan - Back-end development with NodeJS, Mongoose (MongoDB), Express & more \n
+4 - Zak/Kevin - Coding up UI design from David \n
+5 - Miller - GitHub \n
+6 - Malik and Mohamed - Documentation \n
 
 
               
