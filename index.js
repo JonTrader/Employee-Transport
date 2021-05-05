@@ -63,11 +63,11 @@ app.get("/", loggedIn, (req, res) =>
 app.post("/", async (req, res) =>
 {
     const { username, password } = req.body;
-    const user = await Employee.findOne({username});
-    const validPassword = parseInt(password) === user.employeeID;
-    if (validPassword)
+    const foundUser = await Employee.findAndValidate(username, password);
+    
+    if (foundUser)
     {
-        req.session.user_id = user._id;
+        req.session.user_id = foundUser._id;
         res.redirect('/home');
     }
     else

@@ -16,4 +16,11 @@ const EmployeeSchema = new Schema(
 
 })
 
+EmployeeSchema.statics.findAndValidate = async function(username, password)
+{
+    const foundUser = await this.findOne({ username });
+    const validPassword = await parseInt(password) === foundUser.employeeID;
+    return validPassword ? foundUser : false;
+}
+
 module.exports = mongoose.model("Employee", EmployeeSchema);
