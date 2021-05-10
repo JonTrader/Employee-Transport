@@ -66,10 +66,10 @@ app.post("/", async (req, res) =>
 {
     const { username, password } = req.body;
     const foundUser = await Employee.findAndValidate(username, password);
-    console.log(foundUser)
     
     if (foundUser)
     {
+        req.session.user = foundUser;
         req.session.user_id = foundUser._id;
         res.redirect('/home');
     }
@@ -82,17 +82,26 @@ app.post("/", async (req, res) =>
 app.post('/logout', (req, res) =>
 {
     req.session.user_id = null;
+    req.session.user = null;
     req.session.destroy();
     res.redirect('/')
 })
 
 app.get("/home", requireLogin, (req, res) =>
 {
-    res.render("home");
+    const userFound = req.session.user;
+    const title = userFound.title;
+    const lastName = userFound.surname;
+    
+    res.render("home", { title, lastName });
 })
 
 app.get("/routes", requireLogin, async (req, res) =>
 {
+    const userFound = req.session.user;
+    const title = userFound.title;
+    const lastName = userFound.surname;
+
     const routeA = await Route.find({ departureTime: "8:30AM"});
     const routeB = await Route.find({ departureTime: "9:00AM"});
     const routeC = await Route.find({ departureTime: "11:30AM"});
@@ -100,21 +109,28 @@ app.get("/routes", requireLogin, async (req, res) =>
     const routeE = await Route.find({ departureTime: "4:30PM"});
     const routeF = await Route.find({ departureTime: "5:00PM"});
     
-    res.render("routes", { routeA, routeB, routeC, routeD, routeE, routeF} );
+    res.render("routes", { routeA, routeB, routeC, routeD, routeE, routeF, title, lastName} );
 })
 
-app.get("/schedule", (req, res) =>
+app.get("/schedule", requireLogin, (req, res) =>
 {
+    const userFound = req.session.user;
+    const title = userFound.title;
+    const lastName = userFound.surname;
+
     const routesFound = [];
-    res.render("schedule", {routesFound});
+    res.render("schedule", { routesFound, title, lastName });
 })
 
 app.post("/schedule", async (req, res) =>
 {
+    const userFound = req.session.user;
+    const title = userFound.title;
+    const lastName = userFound.surname;
     
     const { from, to } = req.body;
     const routesFound = await Route.findAndCreate(from, to);
-    res.render("schedule", { routesFound });
+    res.render("schedule", { routesFound, title, lastName });
     
 })
 

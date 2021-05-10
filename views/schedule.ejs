@@ -15,7 +15,7 @@
     <nav class="navbar navbar-dark bg-dark">
         <div class="container">
             <a href="/home"><button class="navbar-brand signout">Home</button></a>
-            <a class="navbar-brand">*Mr/Mrs. User*</a>
+            <a class="navbar-brand"><%= title %> <%= lastName %> </a>
           </div>
     </nav>
 
@@ -46,14 +46,20 @@
 
         
             <% for (let route of routesFound) { %>
+                <% let i = 0; %>
 
                 <form action="/schedule" method="POST">
                     <ul>
                         <li><%= route.from %> - <%= route.departureTime %></li>
                         <li><%= route.to %> - <%= route.arrivalTime %></li>
                     </ul>
-                    <button>Submit</button>
+                    <input type="checkbox" name="" id="">
                 </form>
+                <% i = i + 1; %>
+                <% if (i === 3) { %>
+                    <hr>
+                    <br>
+                <% } %>
             <% } %>
         
 
