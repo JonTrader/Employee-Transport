@@ -8,9 +8,10 @@ const session = require('express-session');
 const app = express();
 
 
-// const User = require('./models/user')
+const User = require('./models/user')
 const Route = require("./models/route")
-const Employee = require("./models/employee")
+const Employee = require("./models/employee");
+const { json } = require("express");
 
 mongoose.connect("mongodb://localhost:27017/transportationSystem", 
 {
@@ -39,7 +40,8 @@ app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
 app.use(express.urlencoded({ extended: true}));
-app.use(session({secret: 'notagoodsecret'}))
+app.use(express.json())
+app.use(session({secret: 'loginSecret'}))
 
 const requireLogin = (req, res, next) =>
 {
@@ -64,6 +66,7 @@ app.post("/", async (req, res) =>
 {
     const { username, password } = req.body;
     const foundUser = await Employee.findAndValidate(username, password);
+    console.log(foundUser)
     
     if (foundUser)
     {
@@ -72,7 +75,7 @@ app.post("/", async (req, res) =>
     }
     else
     {
-        res.redirect('/login');
+        res.redirect('/');
     }
 })
 
@@ -100,11 +103,23 @@ app.get("/routes", requireLogin, async (req, res) =>
     res.render("routes", { routeA, routeB, routeC, routeD, routeE, routeF} );
 })
 
-app.get("/schedule", requireLogin, (req, res) =>
+app.get("/schedule", (req, res) =>
 {
-    res.render("schedule");
+    const routesFound = [];
+    res.render("schedule", {routesFound});
+})
+
+app.post("/schedule", async (req, res) =>
+{
+    
+    const { from, to } = req.body;
+    const routesFound = await Route.findAndCreate(from, to);
+    res.render("schedule", { routesFound });
     
 })
+
+
+
 
 
 app.listen (3000, () =>

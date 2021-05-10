@@ -19,7 +19,8 @@ const EmployeeSchema = new Schema(
 EmployeeSchema.statics.findAndValidate = async function(username, password)
 {
     const foundUser = await this.findOne({ username });
-    const validPassword = await parseInt(password) === foundUser.employeeID;
+    let validPassword = false;
+    if (foundUser !== null) validPassword = await parseInt(password) === foundUser.employeeID;
     return validPassword ? foundUser : false;
 }
 

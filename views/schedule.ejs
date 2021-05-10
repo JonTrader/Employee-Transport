@@ -20,9 +20,8 @@
     </nav>
 
     <div class="container mt-5">
-
-        <form action="" method="GET">
-            <select class="dropdowns mr-5" id="from">
+        <form action="/schedule" method="POST" id="schedule-form">
+            <select class="dropdowns mr-5" name="from" id="from">
                 <option value="" disabled selected>From</option>
                 <option value="Midtown East">Midtown East</option>
                 <option value="Brooklyn Navy Yard">Brooklyn Navy Yard</option>
@@ -42,12 +41,56 @@
             </select>
 
             <br>
-            <button type="button" class="btn btn-dark mt-2">Submit</button>
+            <button class="btn btn-dark mt-2">Submit</button>
         </form>
+
+        
+            <% for (let route of routesFound) { %>
+
+                <form action="/schedule" method="POST">
+                    <ul>
+                        <li><%= route.from %> - <%= route.departureTime %></li>
+                        <li><%= route.to %> - <%= route.arrivalTime %></li>
+                    </ul>
+                    <button>Submit</button>
+                </form>
+            <% } %>
+        
+
+
+
+            
 
 
     </div>
     
-    <script src="/js/schedule.js"></script>
+    <script>
+        
+        const s1 = document.getElementById("from");
+        const s2 = document.getElementById("to");
+        const b1 = document.getElementById("search");
+
+        s1.addEventListener("change", function()
+        {
+            for (let value of s2)
+            {
+                if (value.getAttribute("value") !== "") value.removeAttribute("disabled");
+            }
+
+            s2[this.options.selectedIndex].setAttribute("disabled", "true"); 
+
+        })
+
+        s2.addEventListener("change", function()
+        {
+            for (let value of s1)
+            {
+                if (value.getAttribute("value") !== "") value.removeAttribute("disabled");
+            }
+
+            s1[this.options.selectedIndex].setAttribute("disabled", "true"); 
+        })
+
+    </script>
 </body>
 </html>
