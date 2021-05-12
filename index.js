@@ -3,6 +3,7 @@ const path = require("path");
 const mongoose = require("mongoose");
 const ejsMate = require('ejs-mate')
 const session = require('express-session');
+const flash = require('connect-flash');
 const catchAsync = require('./utils/catchAsync')
 const ExpressError = require('./utils/ExpressError')
 // const passport = require('passport');
@@ -45,7 +46,9 @@ app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
 app.use(express.urlencoded({ extended: true}));
-app.use(session({secret: 'loginSecret'}))
+app.use(session({secret: 'loginSecret', resave: false, saveUninitialized: false}))
+
+app.use(flash());
 
 
 const requireLogin = (req, res, next) =>
@@ -62,6 +65,13 @@ const loggedIn = (req, res, next) =>
     next();
 }
 
+app.use((req, res, next) =>
+{
+    res.locals.success = req.flash("success");
+    res.locals.error = req.flash("error");
+    next();
+})
+
 app.get("/", loggedIn, (req, res) =>
 {
     res.render("login");
@@ -76,10 +86,12 @@ app.post("/", catchAsync(async (req, res) =>
     {
         req.session.user = foundUser;
         req.session.user_id = foundUser._id;
+        req.flash("success", "Successfully Logged in")
         res.redirect('/home');
     }
     else
     {
+        req.flash("error", "Unsuccessful login")
         res.redirect('/');
     }
 }))
@@ -89,6 +101,7 @@ app.post('/logout', (req, res) =>
     req.session.user_id = null;
     req.session.user = null;
     req.session.destroy();
+    
     res.redirect('/')
 })
 
@@ -103,8 +116,8 @@ app.get("/routes", requireLogin, catchAsync(async (req, res) =>
 {
     const userFound = req.session.user;
 
-    const routeA = await Route.find({ departureTime: "8:30:00"});
-    const routeB = await Route.find({ departureTime: "9:00:00"});
+    const routeA = await Route.find({ departureTime: "08:30:00"});
+    const routeB = await Route.find({ departureTime: "09:00:00"});
     const routeC = await Route.find({ departureTime: "11:30:00"});
     const routeD = await Route.find({ departureTime: "12:00:00"});
     const routeE = await Route.find({ departureTime: "16:30:00"});
@@ -160,16 +173,14 @@ app.post("/scheduleRoute", catchAsync(async (req, res) =>
             await Route.findByIdAndUpdate(_id, { numPassengers })
             await routeOne.passengers.push(userFound);
             await routeOne.save()
-            console.log("Success")
-            
+            req.flash("success", "Successfully Scheduled Transportation")
+            return res.redirect("/schedule")
         }
         else
         {
-            console.log("Fail")
+            req.flash("error", "Unsuccessfully Scheduled")
             return res.redirect("/home");
         } 
-
-        return res.redirect("/schedule")
         
     }
 
@@ -202,15 +213,16 @@ app.post("/scheduleRoute", catchAsync(async (req, res) =>
             await Route.findByIdAndUpdate(_id, { numPassengers })
             await routeTwo.passengers.push(userFound);
             await routeTwo.save()
-            console.log("Success")
+            req.flash("success", "Successfully Scheduled Transportation")
+            return res.redirect("/schedule")
         }
         else
         {
-            console.log("Fail")
+            req.flash("error", "Unsuccessfully Scheduled")
             return res.redirect("/home");
         }
 
-        return res.redirect("/schedule")
+        
 
     }
 

@@ -12,7 +12,13 @@ const EmployeeSchema = new Schema(
     occupation: String,
     username: String,
     local: String,
-    state: String
+    state: String,
+    routes: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: 'Route',
+            unique: true
+        }]
 
 })
 
