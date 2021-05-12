@@ -3,10 +3,6 @@
     font-family: 'Cabin', sans-serif;
 }
 
-body
-{
-    background-color: rgb(120, 120, 120);
-}
 
 .card-img, .card-img-top
 {
@@ -42,18 +38,14 @@ a p:hover
     opacity: 0.2;
 }
 
-.signout
+
+.dropdowns
 {
-    background-color: inherit;
-    border-radius: .5rem;
-    border:2px rgb(120, 120, 120) solid; 
+    border-radius: 0.5rem;
+    width: 8rem;
+    height: 2.5rem;
+    border: solid #212529 .2rem;
+    font-size: 1.125rem;
 }
 
-.signout:hover
-{
-    background-color: rgb(0, 0, 0);
-    border-radius: .5rem;
-    border:2px rgb(181, 184, 26) solid; 
-    transition: 750ms;
-}
 

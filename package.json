@@ -19,6 +19,7 @@
   "homepage": "https://github.com/JonTrader/Employee-Transport#readme",
   "dependencies": {
     "ejs": "^3.1.6",
+    "ejs-mate": "^3.0.0",
     "express": "^4.17.1",
     "express-session": "^1.17.1",
     "mongoose": "^5.12.5",
