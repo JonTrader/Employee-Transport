@@ -23,13 +23,13 @@
             </select>
 
             <br>
-            <button class="btn btn-dark mt-2">Search</button>
+            <button class="btn btn-dark mt-2" id="search">Search</button>
         </form>
 
         
         
         
-        <form action="/scheduleRoute" method="POST">
+        <form action="/scheduleRoute" method="POST" class="optional" id="routes-form">
                 
                 
 
@@ -50,6 +50,9 @@
                               </div>
                             
                         <% } %>
+                    </div>
+
+                    <div class="col">
                             
                         <h5>Select one</h5>
                         <% for (let r of routesB) { %>
@@ -58,7 +61,7 @@
                             <div class="form-check">
                                 <input class="form-check-input" type="radio" name="routeB" id="routeB" value="<%=r._id%>" required>
                                 <label class="form-check-label" for="routeB">
-                                    <%= r.from %> <%= r.departureTime %> - <%= r.to %> - <%= r.arrivalTime %>
+                                    <%= r.from %> <%= r.departureTime %> - <%= r.to %> <%= r.arrivalTime %>
                                 </label>
                               </div>
                             
@@ -69,7 +72,7 @@
                 </div>
             </div>
 
-            <button class="btn btn-warning">Submit</button>
+            <button class="btn btn-warning mt-3">Submit</button>
         </form>
             
 
@@ -101,5 +104,7 @@
 
             s1[this.options.selectedIndex].setAttribute("disabled", "true"); 
         })
+
+
     </script>
     

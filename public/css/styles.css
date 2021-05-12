@@ -9,7 +9,7 @@
     border-radius: .5rem;
 }
 
-.home-card
+#home-card
 {
     background-color: #27405f;
     border-radius: 0.75rem;
@@ -48,4 +48,15 @@ a p:hover
     font-size: 1.125rem;
 }
 
+.card
+{
+    background-color: #212529;
+    color: white;
+}
+
+.list-group-item
+{
+    background-color: #27405f;
+    color: white;
+}
 

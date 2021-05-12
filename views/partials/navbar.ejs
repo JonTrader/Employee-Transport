@@ -1,34 +1,15 @@
 
 
-    <!-- <nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="">Transport System</a>
-              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-              </button>
-              <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-
-                <div class="navbar-nav d-flex">
-                  <a class="nav-link active" href="/">Home</a>
-                  <span class="navbar-text">
-                    <form action="/logout" method="POST">
-                <button class="navbar-brand ml-2">Sign Out</button>
-            </form>
-                  </span>
-                </div>
-                <form action="/logout" method="POST">
-                    <button class="navbar-brand">Sign Out</button>
-                </form>
-            </div>
-        </div>
-    </nav> -->
-
     <nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark">
         <div class="container">
             <span class="navbar-brand">
                 <%=userFound.title%> <%=userFound.surname%>
             </span>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-brand current-time">
+              
+            </span>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+          
             <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse" id="navbarText">
@@ -45,3 +26,39 @@
           </div>
         </div>
       </nav>
+
+
+      <script>
+
+        const currentTime = function()
+        {
+          let today = new Date();
+          let hours = today.getHours()
+          let minutes = today.getMinutes();
+          let APM = "AM";
+
+          if (hours > 12) 
+          {
+            hours = hours - 12;
+            APM = "PM"
+          }
+
+          if (minutes < 10)
+          {
+            minutes = "0" + minutes;
+          }
+          let time = hours + ":" + minutes + APM
+
+          document.querySelector('.current-time').innerText = time;
+
+          const timeOne = "10:20:00"
+          const timeTwo = "19:10"
+
+          console.log(timeOne < timeTwo)
+        }
+
+        setInterval(currentTime, 1000);
+
+
+
+      </script>

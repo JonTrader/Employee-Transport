@@ -103,12 +103,12 @@ app.get("/routes", requireLogin, catchAsync(async (req, res) =>
 {
     const userFound = req.session.user;
 
-    const routeA = await Route.find({ departureTime: "8:30AM"});
-    const routeB = await Route.find({ departureTime: "9:00AM"});
-    const routeC = await Route.find({ departureTime: "11:30AM"});
-    const routeD = await Route.find({ departureTime: "12:00PM"});
-    const routeE = await Route.find({ departureTime: "4:30PM"});
-    const routeF = await Route.find({ departureTime: "5:00PM"});
+    const routeA = await Route.find({ departureTime: "8:30:00"});
+    const routeB = await Route.find({ departureTime: "9:00:00"});
+    const routeC = await Route.find({ departureTime: "11:30:00"});
+    const routeD = await Route.find({ departureTime: "12:00:00"});
+    const routeE = await Route.find({ departureTime: "16:30:00"});
+    const routeF = await Route.find({ departureTime: "17:00:00"});
     
     res.render("routes", { routeA, routeB, routeC, routeD, routeE, routeF, userFound} );
 }))
@@ -125,6 +125,9 @@ app.get("/schedule", requireLogin, (req, res) =>
 app.post("/schedule", catchAsync(async (req, res) =>
 {
     const userFound = req.session.user;
+
+    
+    
     
     const { from, to } = req.body;
     const routesFound = await Route.findAndCreate(from, to);
@@ -140,26 +143,79 @@ app.post("/scheduleRoute", catchAsync(async (req, res) =>
     const userFound = req.session.user;
     const { routeA, routeB } = req.body;
 
-    let _id = routeA;
-    let route = await Route.findById({ _id })
-    let numPassengers = route.numPassengers + 1;
-
-    await Route.findByIdAndUpdate(_id, { numPassengers })
-    await route.passengers.push(userFound);
-    await route.save()
-
-    if (routeB)
-    {
-        _id = routeB;
-        route = await Route.findById({ _id })
-        numPassengers = route.numPassengers + 1;
-
-        await Route.findByIdAndUpdate(_id, { numPassengers })
-        await route.passengers.push(userFound);
-        await route.save()
-    }
+    var today = new Date();
+    var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
     
-    res.redirect("/schedule")
+
+    if (routeA && !routeB)
+    {
+        console.log("1 route")
+        let _id = routeA;
+        let routeOne = await Route.findById({ _id })
+
+        if (time < routeOne.departureTime)
+        {
+            let numPassengers = routeOne.numPassengers + 1;
+
+            await Route.findByIdAndUpdate(_id, { numPassengers })
+            await routeOne.passengers.push(userFound);
+            await routeOne.save()
+            console.log("Success")
+            
+        }
+        else
+        {
+            console.log("Fail")
+            return res.redirect("/home");
+        } 
+
+        return res.redirect("/schedule")
+        
+    }
+
+    if (routeA && routeB)
+    {
+
+        console.log("2 routes")
+
+        let _id = routeA;
+        let routeOne = await Route.findById({ _id })
+
+        _id = routeB;
+        let routeTwo = await Route.findById({ _id })
+
+        
+
+        if (time < routeOne.departureTime && routeOne.arrivalTime < routeTwo.departureTime)
+        {
+
+            _id = routeA;
+            let numPassengers = routeOne.numPassengers + 1;
+
+            await Route.findByIdAndUpdate(_id, { numPassengers })
+            await routeOne.passengers.push(userFound);
+            await routeOne.save()
+
+            _id = routeB
+            numPassengers = routeTwo.numPassengers + 1;
+
+            await Route.findByIdAndUpdate(_id, { numPassengers })
+            await routeTwo.passengers.push(userFound);
+            await routeTwo.save()
+            console.log("Success")
+        }
+        else
+        {
+            console.log("Fail")
+            return res.redirect("/home");
+        }
+
+        return res.redirect("/schedule")
+
+    }
+
+    res.redirect("/home");
+    
 }))
 
 app.all('*', (req, res, next) =>
