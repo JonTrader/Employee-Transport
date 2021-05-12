@@ -54,6 +54,7 @@ app.use(flash());
 const requireLogin = (req, res, next) =>
 {
     if (!req.session.user_id)   return res.redirect('/');
+    
 
     next();
 }
@@ -71,6 +72,7 @@ app.use((req, res, next) =>
     res.locals.error = req.flash("error");
     next();
 })
+
 
 app.get("/", loggedIn, (req, res) =>
 {
@@ -100,8 +102,8 @@ app.post('/logout', (req, res) =>
 {
     req.session.user_id = null;
     req.session.user = null;
-    req.session.destroy();
     
+    req.flash("success", "Goodbye")
     res.redirect('/')
 })
 
@@ -178,7 +180,7 @@ app.post("/scheduleRoute", catchAsync(async (req, res) =>
         }
         else
         {
-            req.flash("error", "Unsuccessfully Scheduled")
+            req.flash("error", "Unsuccessfully Scheduled - Times Overlap")
             return res.redirect("/home");
         } 
         
@@ -218,7 +220,7 @@ app.post("/scheduleRoute", catchAsync(async (req, res) =>
         }
         else
         {
-            req.flash("error", "Unsuccessfully Scheduled")
+            req.flash("error", "Unsuccessfully Scheduled - Times Overlap")
             return res.redirect("/home");
         }
 

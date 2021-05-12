@@ -28,7 +28,7 @@
 
         
         
-        
+        <% if (routesA && routesA.length) { %>
         <form action="/scheduleRoute" method="POST" class="optional" id="routes-form">
                 
                 
@@ -38,6 +38,7 @@
 
                     <div class="col">
 
+                        
                         
                         <h5>Select one</h5>
                         <% for (let r of routesA) { %>
@@ -50,7 +51,10 @@
                               </div>
                             
                         <% } %>
+                        
                     </div>
+
+                    <% if (routesB && routesB.length) { %>
 
                     <div class="col">
                             
@@ -68,12 +72,14 @@
                             
                         <% } %>
                     </div>
+                    <% } %>
                         
                 </div>
             </div>
 
             <button class="btn btn-warning mt-3">Submit</button>
         </form>
+        <% } %>
             
 
 
